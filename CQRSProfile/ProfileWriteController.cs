@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CQRSProfile
 {
@@ -17,11 +18,20 @@ namespace CQRSProfile
             profile.SetPhotoUrl(photoUrl);
             _profileRepository.Save(profile);
         }
+
+        public void Befriend(int id, int friendId)
+        {
+            NewProfile profile = _profileRepository.Get(id);
+            profile.Befriend(friendId);
+            _profileRepository.Save(profile);
+        }
     }
+
     public class NewProfile
     {
         private string _name;
         private string _url;
+        private HashSet<int> _friends;
 
         public void SetName(string name)
         {
@@ -34,6 +44,14 @@ namespace CQRSProfile
                 throw new InvalidOperationException();
 
             _url = url;
+        }
+
+        public void Befriend(int friendId)
+        {
+            if (_friends.Contains(friendId))
+                throw new InvalidOperationException();
+
+            _friends.Add(friendId);
         }
     }
 
@@ -56,5 +74,6 @@ namespace CQRSProfile
     {
         public string Name { get; private set; }
         public string Url { get; private set; }
+        public List<string> FriendNames { get; private set; }
     }
 }

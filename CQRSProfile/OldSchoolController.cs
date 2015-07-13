@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CQRSProfile
 {
@@ -27,6 +29,7 @@ namespace CQRSProfile
 
     public class OldProfile
     {
+        public int Id { get; set; }
         public string Name { get; set; }
 
         private string _url;
@@ -39,6 +42,23 @@ namespace CQRSProfile
                     throw new InvalidOperationException();
 
                 _url = value;
+            }
+        }
+
+        private IEnumerable<OldProfile> _friends;
+        public IEnumerable<OldProfile> Friends
+        {
+            get
+            {
+                return _friends;
+            }
+            set
+            {
+                var hasDuplicates = value.Select(f => f.Id).Distinct().Count() < value.Count();
+                if (hasDuplicates)
+                    throw new InvalidOperationException();
+
+                _friends = value;
             }
         }
     }
