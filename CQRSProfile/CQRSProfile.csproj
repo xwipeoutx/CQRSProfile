@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IRepository.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="OldSchoolController.cs" />
     <Compile Include="ProfileWriteController.cs" />
     <Compile Include="Program.cs" />

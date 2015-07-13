@@ -1,4 +1,5 @@
-﻿namespace CQRSProfile
+﻿
+namespace CQRSProfile
 {
     public interface IRepository<T>
     {
